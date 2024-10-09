@@ -10,6 +10,13 @@
     object-fit: cover;
 }
 
+#trackingScreen {
+    width: 390px;
+    height: 844px;
+    object-fit: cover;
+    position: absolute;
+}
+
 #buttonOrange {
     position: absolute;
     display: flex;
@@ -59,6 +66,7 @@
     position: absolute;
     display: flex;
     top: 700px;
+    left: 345px;
     background-color: #0EA84F;
     border-radius: 100%;
     margin-right: 10px;
@@ -66,6 +74,7 @@
     align-items: center;
     width: 25px;
     height: 25px;
+    padding: 10px;
 }
 
 #checkmark {
@@ -76,8 +85,8 @@
 
 <template>
     <div id="canvas">
-        <img id="mainscreen" src="./assets/mainscreen.PNG">
-        <div id="buttonOrange" v-show="showOrange == true">
+        <img id="mainscreen" src="./assets/mainscreen.PNG" v-show="trackingOpen==false">
+        <div id="buttonOrange" v-show="showOrange == true && trackingOpen == false" @click="openTracking">
             <div id="contents">
                 <img src="./assets/restaurant.svg">
                 <div id="bar"></div>
@@ -90,8 +99,9 @@
             </div>
         </div>
         <div id="buttonGreen" v-show="showOrange == false">
-            <img id="checkmark" src="">
+            <img id="checkmark" src="./assets/check.svg">
         </div>
+        <img id="trackingScreen" src="./assets/tracking.PNG" v-show="trackingOpen == true">
     </div>
     <button @click="moveToMiddle">Move order</button>
     <button @click="completeOrder">Complete order</button>
@@ -120,8 +130,10 @@ function moveToMiddle() {
     animateCircle(); //using/executing the function
 }
 
-function openTracking() {
+const trackingOpen = ref(false);
 
+function openTracking() {
+    trackingOpen.value = true;
 }
 
 const showOrange = ref(true);
@@ -129,6 +141,4 @@ const showOrange = ref(true);
 function completeOrder() {
     showOrange.value = false;
 }
-
-
 </script>
